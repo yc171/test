@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.UserMapper">
+	<select id="getAll" resultType="user">
+		select * from smbms_user
+	</select>
+	<select id="getPage" parameterType="map" resultType="User">
+		select*from smbms_user
+		<where>
+			<if test="name!=null and name!=''">
+				and username like concat('%',#{name},'%')
+			</if>
+			<if test="address!=null and address!=''">
+				and address like concat('%',#{address},'%')
+			</if>
+		</where>
+		 limit #{start},#{pageSize}
+	</select>
+	<select id="getCount" parameterType="map" resultType="int">
+		select count(*) from smbms_user
+		<where>
+			<if test="name!=null and name!=''">
+				and username like concat('%',#{name},'%')
+			</if>
+			<if test="address!=null and address!=''">
+				and address like concat('%',#{address},'%')
+			</if>
+		</where>
+	</select>
+</mapper>
